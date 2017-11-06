@@ -1,0 +1,52 @@
+name: mediaserver-frafall
+version: '0.1'
+summary: A multiroom media server
+description : Running librespot, mopidy and snapcast
+confinement: devmode
+grade: devel
+
+apps:
+  snapserver:
+    command: server/snapserver
+
+parts:
+  shairport-sync:
+    plugin: autotools
+    source: https://github.com/mikebrady/shairport-sync.git
+    source-tag: '3.2d10'
+    stage-packages:
+      - gcc
+      - libdaemon-dev
+      - libpopt-dev
+      - libconfig-dev
+      - libasound2-dev 
+      - libavahi-client-dev
+      - libssl-dev
+      - libsoxr-dev 
+      - alac-decoder
+      - libz-dev
+    configflags:
+      - --with-ssl=openssl
+
+  librespot:
+    plugin: rust
+    source: https://github.com/plietar/librespot.git
+    stage-packages:
+      - portaudio19-dev
+
+  snapcast:
+    plugin: make
+    source: https://github.com/badaix/snapcast.git
+    source-tag: 'v0.12.0'
+    stage-packages:
+      - g++
+      - libasound2-dev 
+      - libvorbisidec-dev 
+      - libvorbis-dev 
+      - libflac-dev
+      - alsa-utils 
+      - libavahi-client-dev 
+      - avahi-daemon
+    artifacts:
+      - server/snapserver
+      - client/snapclient
