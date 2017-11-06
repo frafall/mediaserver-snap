@@ -6,8 +6,12 @@ confinement: devmode
 grade: devel
 
 apps:
-  snapserver:
-    command: server/snapserver
+  supervisorctl:
+    command: usr/bin/supervisorctl
+
+  supervisord:
+    command: usr/bin/supervisord
+    daemon: forking
 
 parts:
   shairport-sync:
@@ -33,6 +37,7 @@ parts:
     source: https://github.com/plietar/librespot.git
     stage-packages:
       - portaudio19-dev
+      - libuuid1
 
   snapcast:
     plugin: make
@@ -47,6 +52,16 @@ parts:
       - alsa-utils 
       - libavahi-client-dev 
       - avahi-daemon
-    artifacts:
+    artifacts: 
       - server/snapserver
       - client/snapclient
+    organize:
+      server/snapserver: usr/bin/snapserver
+      client/snapclient: usr/bin/snapclient
+
+  supervisor:
+    plugin: python
+    stage-packages:
+      - supervisor
+ 
+
