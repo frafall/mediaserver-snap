@@ -20,10 +20,10 @@ This .snap is available in the store for release series 16 (e.g. Ubuntu
 
 ## Status
 - Builds ok 
-  snapcraft prime
+  - snapcraft prime
 
 - Fail to start supervisord
-  sudo snap try --devmode prime
+  - sudo snap try --devmode prime
 
 [1]: https://github.com/frafall/mediaserver-snap
 
